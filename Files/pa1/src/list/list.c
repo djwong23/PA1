@@ -91,17 +91,59 @@ int main(int argc, char *argv[])
                 }
             }
         }
+        else if (c == 'd')
+        {
+            if (count != 0)
+            {
+                struct Node *ptr = root;
+                if (root->num == i)
+                {
+                    if (root->next == NULL)
+                    {
+                        free(root);
+                        root = NULL;
+                        count--;
+                    }
+                    else
+                    {
+                        struct Node *p = root;
+                        root = root->next;
+                        free(p);
+                        count--;
+                    }
+                }
+                else
+                {
+                    while (ptr != NULL)
+                    {
+                        if (ptr->next != NULL && ptr->next->num == i)
+                        {
+                            struct Node *p = ptr->next;
+                            ptr->next = ptr->next->next;
+                            free(p);
+                            count--;
+                            break;
+                        }
+                        ptr = ptr->next;
+                    }
+                }
+            }
+        }
         else
         {
             break;
         }
-        struct Node *ptr = root;
-        printf("%i : ", count);
+        struct Node *ptr = NULL;
+        if (root != NULL)
+            ptr = root;
+        printf("%i :", count);
+
         while (ptr != NULL)
         {
-            printf("%i ", ptr->num);
+            printf(" %i", ptr->num);
             ptr = ptr->next;
         }
+        printf("\n");
     }
     struct Node *p = NULL;
     struct Node *ptr = root;
